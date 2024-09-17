@@ -1,7 +1,4 @@
 
-/*==============================================================*/
-/* Table: ROTEIRO                                               */
-/*==============================================================*/
 create table ROTEIRO
 (
    id                   BIGINT not null AUTO_INCREMENT,
@@ -17,9 +14,6 @@ create table ROTEIRO
    primary key (ID)
 );
 
-/*==============================================================*/
-/* Table: ROTEIROAPROVADORES                                    */
-/*==============================================================*/
 create table ROTEIROAPROVADORES
 (
    id                   BIGINT not null AUTO_INCREMENT,
