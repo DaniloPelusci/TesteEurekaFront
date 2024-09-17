@@ -1,70 +1,91 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+/*==============================================================*/
+/* Table: ROTEIRO                                               */
+/*==============================================================*/
+create table ROTEIRO
+(
+   id                   BIGINT not null AUTO_INCREMENT,
+   IDANALISTA           BIGINT,
+   IDREVISOR            BIGINT,
+	EMAILCLIENTE                char(255),
+   NOMECLIENTE                 char(255),
+   TELEFONECLIENTE             char(255),
+   TEXTO                char(255),
+   DATAENVIO            date,
+   OPINIAOANALISTA      char(255),
+    REVISAO      char(255),
+   primary key (ID)
+);
 
-## Available Scripts
+/*==============================================================*/
+/* Table: ROTEIROAPROVADORES                                    */
+/*==============================================================*/
+create table ROTEIROAPROVADORES
+(
+   id                   BIGINT not null AUTO_INCREMENT,
+   ID_Roteiro           BIGINT not null,
+   ID_Usuario           BIGINT not null,
+   primary key (ID)
+);
 
-In the project directory, you can run:
+CREATE TABLE `users` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) DEFAULT NULL,
+  `EMAIL`                char(255),
+  `NOME`                 char(255),
+  `password` char(255) DEFAULT NULL,
+  `account_non_expired` bit(1) DEFAULT NULL,
+  `account_non_locked` bit(1) DEFAULT NULL,
+  `credentials_non_expired` bit(1) DEFAULT NULL,
+  `enabled` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_user_name` (`user_name`)
+);
 
-### `npm start`
+CREATE TABLE permission (
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   description VARCHAR(255) DEFAULT NULL,
+   PRIMARY KEY (id)
+) ;
+CREATE TABLE user_permission (
+  id_user BIGINT NOT NULL,
+  id_permission BIGINT NOT NULL,
+  PRIMARY KEY (id_user, id_permission),
+  KEY fk_user_permission_permission (id_permission),
+  CONSTRAINT fk_user_permission FOREIGN KEY (id_user) REFERENCES users (id),
+  CONSTRAINT fk_user_permission_permission FOREIGN KEY (id_permission) REFERENCES permission (id)
+) ;
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+alter table ROTEIRO add constraint roteiroUsuario foreign key (IDANALISTA)
+      references users (ID) on delete restrict on update restrict;
+      
+alter table ROTEIRO add constraint FK_RELATIONSHIP_7 foreign key (IDREVISOR)
+      references users (ID) on delete restrict on update restrict;
 
-### `npm run build`
+alter table ROTEIROAPROVADORES add constraint FK_RELATIONSHIP_5 foreign key (ID_Usuario)
+      references users (ID) on delete restrict on update restrict;
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+alter table ROTEIROAPROVADORES add constraint FK_RELATIONSHIP_8 foreign key (ID_Roteiro)
+      references ROTEIRO (ID) on delete restrict on update restrict;
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+INSERT INTO permission (description) VALUES
+  ('ADMIN'),
+  ('ANALISTA'),
+  ('REVISOR'),
+  ('APROVADOR');
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+INSERT INTO users (user_name, NOME, EMAIL, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES
+  ('adm', 'adimin','teste@teste.com', '19bbf735b27066f2f145e602624e1b24a3fbc54cd5dfd3143fc5feea6bdee9e139ca7332d4806b9f', 1, 1, 1, 1),
+  ('ANALISTA', 'ANALISTA','teste@teste.com', '75ec349c1b0ef4ee7b249d0b83ae4861853f3aa77bce8c4b15f28cd43c6424ab4f29df431831bb0d', 1, 1, 1, 1),
+  ('REVISOR', 'REVISOR','teste@teste.com', '75ec349c1b0ef4ee7b249d0b83ae4861853f3aa77bce8c4b15f28cd43c6424ab4f29df431831bb0d', 1, 1, 1, 1),
+  ('APROVADOR', 'APROVADOR','teste@teste.com', '75ec349c1b0ef4ee7b249d0b83ae4861853f3aa77bce8c4b15f28cd43c6424ab4f29df431831bb0d', 1, 1, 1, 1);
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+INSERT INTO user_permission (id_user, id_permission) VALUES 
+  (1, 1), 
+  (2, 2),
+   (3, 3),
+    (4, 4);
